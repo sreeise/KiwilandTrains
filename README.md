@@ -12,7 +12,7 @@ There are two projects:
 
 - Kiwiland.RouteComputation: Library for computing route information such as shortest distance.
 - Kiwiland.Cli: A CLI that will run route computation on the routes given.
-= RouteComputationTests: Runs tests for building the output and tests based on the trains scenario.
+- RouteComputationTests: Runs tests for building the output and tests based on the trains scenario.
 
 ### Explanation
 
