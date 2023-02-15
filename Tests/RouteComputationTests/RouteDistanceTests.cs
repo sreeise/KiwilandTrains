@@ -59,4 +59,27 @@ public class RouteDistanceTests
         var totalRoutes = _graph.RoutesWithMaxDistance(Route.C, Route.C, 30);
         Assert.Equal(7, totalRoutes);
     }
+
+    [Fact]
+    public void MaxDistanceUsingRoutesTest()
+    {
+        // CDC, CEBC, CEBCDC, CDCEBC, CDEBC, CEBCEBC, CEBCEBCEBC.
+        var routes = new List<List<Route>>()
+        {
+            new List<Route>() {Route.C, Route.D, Route.C},
+            new List<Route>() {Route.C, Route.E, Route.B, Route.C},
+            new List<Route>() {Route.C, Route.E, Route.B, Route.C, Route.D, Route.C},
+            new List<Route>() {Route.C, Route.D, Route.C, Route.E, Route.B, Route.C},
+            new List<Route>() {Route.C, Route.D, Route.E, Route.B, Route.C},
+            new List<Route>() {Route.C, Route.E, Route.B, Route.C, Route.E, Route.B, Route.C},
+            new List<Route>() {Route.C, Route.E, Route.B, Route.C, Route.E, Route.B, Route.C, Route.E, Route.B, Route.C}
+        };
+
+        foreach (var routeList in routes)
+        {
+            var (distance, hasRoute) = _graph.RouteDistance(routeList);
+            Assert.True(distance < 30);
+            Assert.True(hasRoute);
+        }
+    }
 }
