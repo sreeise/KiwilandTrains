@@ -46,7 +46,7 @@ public class RouteDistanceTests
 
         var routeStrings = routes.Select(route => route.IntoString()).ToList();
         Assert.Contains(routeStrings, r => r == "ABCDC");
-        Assert.Contains(routeStrings, r => r == "ABCDC");
+        Assert.Contains(routeStrings, r => r == "ADCDC");
         Assert.Contains(routeStrings, r => r == "ADEBC");
     }
 }
