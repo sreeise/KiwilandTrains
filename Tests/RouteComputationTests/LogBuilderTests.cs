@@ -21,11 +21,11 @@ public class LogBuilderTests
 
         var output = LogBuilder.Input("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7")
             .FindRouteDistance(routes)
-            .FindDistanceGivenK(Route.C, Route.C, 3)
-            .FindDistanceEqualToK(Route.A, Route.C, 4)
+            .FindRoutesLessThanMaxStops(Route.C, Route.C, 3)
+            .FindRoutesEqualToMaxStops(Route.A, Route.C, 4)
             .ShortestRoute(Route.A, Route.C)
             .ShortestRoute(Route.B, Route.B)
-            .MaxDistance(Route.C, Route.C, 30)
+            .FindRoutesLessThanMaxDistance(Route.C, Route.C, 30)
             .ToString();
         Assert.Equal(output.Trim().Remove(' ').Remove('\n'), s.Trim().Remove(' ').Remove('\n'));
     }

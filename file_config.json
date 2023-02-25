@@ -1,0 +1,29 @@
+﻿{
+  "Routes": ["AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"],
+  "FindRoutesDistances": [
+    ["A", "B", "C"],
+    ["A", "D"],
+    ["A", "D", "C"],
+    ["A", "E", "B", "C", "D"],
+    ["A", "E", "D"]
+  ],
+  "RoutesLessThanMaxStops": {
+    "StartDest": "C",
+    "EndDest": "C",
+    "Num": 3
+  },
+  "RoutesEqualToMaxStops": {
+    "StartDest": "A",
+    "EndDest": "C",
+    "Num": 4
+  },
+  "ShortestRoutes": [
+    { "StartDest": "A", "EndDest": "C" },
+    { "StartDest": "B", "EndDest": "B" }
+  ],
+  "RoutesLessThanMaxDistance": {
+    "StartDest": "C",
+    "EndDest": "C",
+    "Num": 30
+  }
+}

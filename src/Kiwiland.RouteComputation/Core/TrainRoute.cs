@@ -1,8 +1,6 @@
-﻿using System.Text;
-using Kiwiland.RouteComputation.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Kiwiland.RouteComputation.core;
+namespace Kiwiland.RouteComputation.Core;
 
 public class TrainRoute
 {
@@ -16,12 +14,6 @@ public class TrainRoute
     {
         Directions = string.Empty;
         Distance = 0;
-    }
-
-    private TrainRoute(string directions, int distance)
-    {
-        Directions = directions;
-        Distance = distance;
     }
 
     public TrainRoute NextStop(string nextStop, int distance)

@@ -1,10 +1,10 @@
-﻿using Kiwiland.RouteComputation.core;
+﻿using Kiwiland.RouteComputation.Core;
 
 namespace Kiwiland.RouteComputation.Generic;
 
 public interface IGatewayGraph<T>
 {
-    void AddNode(T node);
+    T AddNode(T node);
 
     void AddRoute(T node1, T node2, int distance);
 

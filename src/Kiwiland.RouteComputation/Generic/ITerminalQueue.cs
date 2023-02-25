@@ -1,4 +1,4 @@
-﻿using Kiwiland.RouteComputation.core;
+﻿using Kiwiland.RouteComputation.Core;
 
 namespace Kiwiland.RouteComputation.Generic;
 

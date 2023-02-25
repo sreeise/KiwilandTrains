@@ -1,8 +1,6 @@
-﻿using System.Text;
+﻿using Kiwiland.Cli.RoutesFileConfig;
 using Kiwiland.RouteComputation;
-using Kiwiland.RouteComputation.core;
-using Kiwiland.RouteComputation.Generic;
-using Newtonsoft.Json;
+using Kiwiland.RouteComputation.Core;
 
 namespace Kiwiland.Cli.Builder;
 
@@ -15,14 +13,11 @@ public class LogBuilder : AbstractLogBuilder
         Gateway = Helper.TerminalGateway(input);
     }
 
-    public static AbstractLogBuilder Input(string input)
-    {
-        return new LogBuilder(input);
-    }
+    public static AbstractLogBuilder Input(string input) => new LogBuilder(input);
 
     public override AbstractLogBuilder FindRouteDistance(IEnumerable<IEnumerable<Route>> routes)
     {
-        var r = routes.ToList();
+        var r = routes.Select(r => r.ToList()).ToList();
         for (var i = 0; i < r.Count; i++)
         {
             var (distance, hasRoute) = Gateway.RouteDistance(r[i]);
@@ -32,14 +27,14 @@ public class LogBuilder : AbstractLogBuilder
         return this;
     }
 
-    public override AbstractLogBuilder FindDistanceGivenK(Route start, Route end, int k)
+    public override AbstractLogBuilder FindRoutesLessThanMaxStops(Route start, Route end, int k)
     {
         var totalRoutes = Gateway.FindRoutesLessThanMaxStops(start, end, k);
         AppendLog(totalRoutes.Count());
         return this;
     }
 
-    public override AbstractLogBuilder FindDistanceEqualToK(Route start, Route end, int k)
+    public override AbstractLogBuilder FindRoutesEqualToMaxStops(Route start, Route end, int k)
     {
         var totalRoutes = Gateway.FindRoutesEqualToMaxStops(start, end, k);
         AppendLog(totalRoutes.Count());
@@ -53,7 +48,18 @@ public class LogBuilder : AbstractLogBuilder
         return this;
     }
 
-    public override AbstractLogBuilder MaxDistance(Route start, Route end, int maxDistance)
+    public override AbstractLogBuilder ShortestRoute(IEnumerable<ShortestRoute> shortestRoutes)
+    {
+        foreach (var shortestRoute in shortestRoutes)
+        {
+            var ans = Gateway.ShortestRoute(shortestRoute.StartDest, shortestRoute.EndDest);
+            AppendLog(ans);
+        }
+
+        return this;
+    }
+
+    public override AbstractLogBuilder FindRoutesLessThanMaxDistance(Route start, Route end, int maxDistance)
     {
         var totalRoutes = Gateway.FindRoutesLessThanMaxDistance(start, end, maxDistance).ToList();
         AppendLog(totalRoutes.Count);

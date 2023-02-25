@@ -1,7 +1,6 @@
-using Kiwiland.Cli;
 using Kiwiland.Cli.Builder;
 using Kiwiland.RouteComputation;
-using Kiwiland.RouteComputation.core;
+using Kiwiland.RouteComputation.Core;
 
 namespace RouteComputationTests;
 

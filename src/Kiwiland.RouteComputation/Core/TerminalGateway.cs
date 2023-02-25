@@ -1,6 +1,6 @@
 ﻿using Kiwiland.RouteComputation.Generic;
 
-namespace Kiwiland.RouteComputation.core;
+namespace Kiwiland.RouteComputation.Core;
 
 /// <summary>
 /// TerminalGateway is a central hub for computing train route distances, total maxStops,
@@ -39,9 +39,10 @@ public class TerminalGateway : IGatewayGraph<Terminal>
         return _terminals[terminal.StationId];
     }
 
-    public void AddNode(Terminal terminal)
+    public Terminal AddNode(Terminal terminal)
     {
         if (!_terminals.ContainsKey(terminal.StationId)) _terminals.Add(terminal.StationId, terminal);
+        return _terminals[terminal.StationId];
     }
 
     public Terminal? GetNode(string stationName)
@@ -272,4 +273,7 @@ public class TerminalGateway : IGatewayGraph<Terminal>
 
         return distance > 0 ? (distance, true) : (-1, false);
     }
+
+    public (int, bool) RouteDistance(IEnumerable<string> routes) =>
+        RouteDistance(routes.Select(s => char.Parse(s).ToRoute()));
 }

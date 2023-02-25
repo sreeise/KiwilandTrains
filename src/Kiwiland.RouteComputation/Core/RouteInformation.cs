@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Kiwiland.RouteComputation.core;
+﻿namespace Kiwiland.RouteComputation.Core;
 
 public record RouteInformation(List<string> DirectionsRoutes, int Distance, int Stops)
 {
@@ -10,7 +8,7 @@ public record RouteInformation(List<string> DirectionsRoutes, int Distance, int 
 
     public override string ToString()
     {
-        var s = DirectionsRoutes.Aggregate((s, s1) => $"{s} -> {s1} ");
-        return $"\nRoute: {s}\nDistance: {Distance}\nStops: {Stops}";
+        var routes = DirectionsRoutes.Aggregate((s, s1) => $"{s} -> {s1} ");
+        return $"\nRoutes: {routes}\nDistance: {Distance}\nStops: {Stops}";
     }
 }

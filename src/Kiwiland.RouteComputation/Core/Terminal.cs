@@ -1,4 +1,4 @@
-﻿namespace Kiwiland.RouteComputation.core;
+﻿namespace Kiwiland.RouteComputation.Core;
 
 /// <summary>
 /// Terminal represents a train station or railroad terminal.

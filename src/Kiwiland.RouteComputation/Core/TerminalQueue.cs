@@ -1,7 +1,7 @@
 ﻿using Kiwiland.RouteComputation.Generic;
 using Newtonsoft.Json;
 
-namespace Kiwiland.RouteComputation.core;
+namespace Kiwiland.RouteComputation.Core;
 
 public class TerminalQueue : ITerminalQueue
 {

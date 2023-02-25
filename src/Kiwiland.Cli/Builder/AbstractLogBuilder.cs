@@ -1,18 +1,20 @@
 ﻿using System.Text;
+using Kiwiland.Cli.RoutesFileConfig;
 using Kiwiland.RouteComputation;
 
 namespace Kiwiland.Cli.Builder;
 
 public abstract class AbstractLogBuilder
 {
-    private readonly StringBuilder _stringBuilder = new StringBuilder();
-    private int _output = 0;
+    private readonly StringBuilder _stringBuilder = new();
+    private int _output;
 
     public abstract AbstractLogBuilder FindRouteDistance(IEnumerable<IEnumerable<Route>> routes);
-    public abstract AbstractLogBuilder FindDistanceGivenK(Route start, Route end, int k);
-    public abstract AbstractLogBuilder FindDistanceEqualToK(Route start, Route end, int k);
+    public abstract AbstractLogBuilder FindRoutesLessThanMaxStops(Route start, Route end, int k);
+    public abstract AbstractLogBuilder FindRoutesEqualToMaxStops(Route start, Route end, int k);
     public abstract AbstractLogBuilder ShortestRoute(Route start, Route end);
-    public abstract AbstractLogBuilder MaxDistance(Route start, Route end, int maxDistance);
+    public abstract AbstractLogBuilder ShortestRoute(IEnumerable<ShortestRoute> shortestRoutes);
+    public abstract AbstractLogBuilder FindRoutesLessThanMaxDistance(Route start, Route end, int maxDistance);
 
     protected void AppendLog(string output)
     {
