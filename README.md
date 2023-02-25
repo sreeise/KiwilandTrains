@@ -23,4 +23,4 @@ done using a similar approach to shortest distance with Dijkstra's algorithm and
 The main difference is how the max stops and max distance use `yield return` to yield each set of routes that match
 the given criteria. Time complexity is the same at O(E Log V).
 - Finding the total distance of a specific route is done by just following the pointers to the next
-edge in a weighted graph until the end is reached. Time complexity is O(N).
+edge in a weighted graph until the end is reached. Time complexity is O(N + M).
