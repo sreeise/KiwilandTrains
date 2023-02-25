@@ -1,77 +1,62 @@
 ﻿using System.Text;
 using Kiwiland.RouteComputation;
-using Kiwiland.RouteComputation.Digraph;
+using Kiwiland.RouteComputation.core;
 using Kiwiland.RouteComputation.Generic;
+using Newtonsoft.Json;
 
 namespace Kiwiland.Cli.Builder;
 
-public class LogBuilder : ILogBuilder
+public class LogBuilder : AbstractLogBuilder
 {
-    private readonly StringBuilder _stringBuilder = new StringBuilder();
-    private readonly IGraph _graph;
-    private int _output;
+    private TerminalGateway Gateway { get; set; }
 
     private LogBuilder(string input)
     {
-        var adj = Helper.MapInput(input);
-        _graph = new Graph(adj);
-        _output = 0;
+        Gateway = Helper.TerminalGateway(input);
     }
 
-
-    public static ILogBuilder Input(string input)
+    public static AbstractLogBuilder Input(string input)
     {
         return new LogBuilder(input);
     }
 
-
-    public ILogBuilder WithRouteDistance(IEnumerable<IEnumerable<Route>> routes)
+    public override AbstractLogBuilder FindRouteDistance(IEnumerable<IEnumerable<Route>> routes)
     {
         var r = routes.ToList();
         for (var i = 0; i < r.Count; i++)
         {
-            _output += 1;
-            var (distance, hasRoute) = _graph.RouteDistance(r[i]);
-            if (!hasRoute) _stringBuilder.Append($"Output #{_output}: NO SUCH ROUTE\n");
-            else _stringBuilder.Append($"Output #{_output}: {distance}\n");
+            var (distance, hasRoute) = Gateway.RouteDistance(r[i]);
+            if (!hasRoute) AppendLog("NO SUCH ROUTE");
+            else AppendLog(distance);
         }
         return this;
     }
 
-    public ILogBuilder WithDistanceGivenK(Route start, Route end, int k)
+    public override AbstractLogBuilder FindDistanceGivenK(Route start, Route end, int k)
     {
-        _output += 1;
-        var totalRoutes = _graph.FindRoutesGivenK(start, end, k);
-        _stringBuilder.Append($"Output #{_output}: {totalRoutes}\n");
+        var totalRoutes = Gateway.FindRoutesLessThanMaxStops(start, end, k);
+        AppendLog(totalRoutes.Count());
         return this;
     }
 
-    public ILogBuilder WithDistanceEqualToK(Route start, Route end, int k)
+    public override AbstractLogBuilder FindDistanceEqualToK(Route start, Route end, int k)
     {
-        _output += 1;
-        var totalRoutes = _graph.FindRoutesEqualToK(start, end, k);
-        _stringBuilder.Append($"Output #{_output}: {totalRoutes}\n");
+        var totalRoutes = Gateway.FindRoutesEqualToMaxStops(start, end, k);
+        AppendLog(totalRoutes.Count());
         return this;
     }
 
-    public ILogBuilder WithShortestRoute(Route start, Route end)
+    public override AbstractLogBuilder ShortestRoute(Route start, Route end)
     {
-        _output += 1;
-        var shortestRoute = _graph.ShortestRoute(start, end);
-        _stringBuilder.Append($"Output #{_output}: {shortestRoute}\n");
+        var shortestRoute = Gateway.ShortestRoute(start, end);
+        AppendLog(shortestRoute);
         return this;
     }
 
-    public ILogBuilder WithMaxDistance(Route start, Route end, int maxDistance)
+    public override AbstractLogBuilder MaxDistance(Route start, Route end, int maxDistance)
     {
-        _output += 1;
-        var totalRoutes = _graph.RoutesWithMaxDistance(start, end, maxDistance);
-        _stringBuilder.Append($"Output #{_output}: {totalRoutes}\n");
+        var totalRoutes = Gateway.FindRoutesLessThanMaxDistance(start, end, maxDistance).ToList();
+        AppendLog(totalRoutes.Count);
         return this;
-    }
-
-    public string Build()
-    {
-        return _stringBuilder.ToString();
     }
 }

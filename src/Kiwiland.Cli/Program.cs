@@ -12,15 +12,14 @@ var routes = new List<List<Route>>()
 };
 /*
  // Uncomment to run input based on the trains scenario.
- var output = LogBuilder.Input("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7")
-    .WithRouteDistance(routes)
-    .WithDistanceGivenK(Route.C, Route.C, 3)
-    .WithDistanceEqualToK(Route.A, Route.C, 4)
-    .WithShortestRoute(Route.A, Route.C)
-    .WithShortestRoute(Route.B, Route.B)
-    .WithMaxDistance(Route.C, Route.C, 30)
+LogBuilder.Input("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7")
+    .FindRouteDistance(routes)
+    .FindDistanceGivenK(Route.C, Route.C, 3)
+    .FindDistanceEqualToK(Route.A, Route.C, 4)
+    .ShortestRoute(Route.A, Route.C)
+    .ShortestRoute(Route.B, Route.B)
+    .MaxDistance(Route.C, Route.C, 30)
     .Build();
-    Console.WriteLine(output);
  */
 
 var rootCommand = new RootCommand("Kiwiland CLI for providing information on railroad routes and distances");
@@ -32,15 +31,14 @@ var routesOption = new Option<string[]>(
 rootCommand.AddOption(routesOption);
 rootCommand.SetHandler((routeStr) =>
 {
-    var cliOutput = LogBuilder.Input(string.Join(' ', routeStr))
-        .WithRouteDistance(routes)
-        .WithDistanceGivenK(Route.C, Route.C, 3)
-        .WithDistanceEqualToK(Route.A, Route.C, 4)
-        .WithShortestRoute(Route.A, Route.C)
-        .WithShortestRoute(Route.B, Route.B)
-        .WithMaxDistance(Route.C, Route.C, 30)
+    LogBuilder.Input(string.Join(' ', routeStr))
+        .FindRouteDistance(routes)
+        .FindDistanceGivenK(Route.C, Route.C, 3)
+        .FindDistanceEqualToK(Route.A, Route.C, 4)
+        .ShortestRoute(Route.A, Route.C)
+        .ShortestRoute(Route.B, Route.B)
+        .MaxDistance(Route.C, Route.C, 30)
         .Build();
-    Console.WriteLine(cliOutput);
 }, routesOption);
 
 return await rootCommand.InvokeAsync(args);
